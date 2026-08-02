@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Edit Post' }) %>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen">
+  <%- include('partials/navbar') %>
+
+  <div class="max-w-2xl mx-auto px-5 py-8">
+    <a href="/profile" class="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition inline-flex items-center gap-1 mb-6">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+      Back to profile
+    </a>
+
+    <div class="card p-5">
+      <h2 class="text-lg font-semibold mb-4">Edit your post</h2>
+      <form action="/edit/<%= post._id %>" method="post" id="editForm">
+        <textarea
+          name="content"
+          id="editContent"
+          required
+          maxlength="500"
+          class="field h-28 resize-none mb-2"
+        ><%= post.content %></textarea>
+        <div class="flex items-center justify-between">
+          <span class="char-counter"><span id="editCharCount">0</span>/500</span>
+          <div class="flex gap-3">
+            <a href="/profile" class="btn-ghost text-sm">Cancel</a>
+            <button type="submit" class="px-5 py-2 rounded-md text-sm font-semibold text-white" style="background:linear-gradient(135deg, var(--accent), #7c3aed);">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <%- include('partials/toast') %>
+  <script>
+    const box = document.getElementById('editContent');
+    const count = document.getElementById('editCharCount');
+    const update = () => count.textContent = box.value.length;
+    update();
+    box.addEventListener('input', update);
+  </script>
+</body>
+</html>

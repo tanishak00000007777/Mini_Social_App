@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Login' }) %>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-6">
+      <a href="/" class="inline-flex items-center gap-2 font-bold text-lg">
+        <span class="brand-mark">◎</span> Loop
+      </a>
+    </div>
+
+    <div class="auth-card p-8">
+      <h3 class="text-2xl font-bold mb-1 text-center">Welcome back</h3>
+      <p class="text-sm text-[var(--text-muted)] text-center mb-6">Log in to keep the conversation going</p>
+
+      <form id="loginForm" class="space-y-3.5" autocomplete="off">
+        <input type="email" name="email" placeholder="Email" required class="field" />
+        <input type="password" name="password" placeholder="Password" required class="field" />
+
+        <button type="submit" class="btn-primary mt-1">
+          <span class="btn-label">Login</span>
+          <span class="spinner" style="display:none;"></span>
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <p class="text-sm text-[var(--text-muted)] mb-2">Don't have an account?</p>
+        <a href="/register" class="btn-ghost">Create Account</a>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/toast') %>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

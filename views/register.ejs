@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Create Account' }) %>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-6">
+      <a href="/" class="inline-flex items-center gap-2 font-bold text-lg">
+        <span class="brand-mark">◎</span> Loop
+      </a>
+    </div>
+
+    <div class="auth-card p-8">
+      <h3 class="text-2xl font-bold mb-1 text-center">Create your account</h3>
+      <p class="text-sm text-[var(--text-muted)] text-center mb-6">Start posting in under a minute</p>
+
+      <form id="registerForm" class="space-y-3.5" autocomplete="off">
+        <input type="text" name="username" placeholder="Username" required class="field" />
+        <input type="text" name="name" placeholder="Full name" required class="field" />
+        <input type="email" name="email" placeholder="Email" required class="field" />
+        <input type="number" name="age" placeholder="Age" required min="1" class="field" />
+        <input type="password" name="password" placeholder="Password" required minlength="4" class="field" />
+
+        <button type="submit" class="btn-primary mt-1">
+          <span class="btn-label">Create Account</span>
+          <span class="spinner" style="display:none;"></span>
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <p class="text-sm text-[var(--text-muted)] mb-2">Already have an account?</p>
+        <a href="/login" class="btn-ghost">Go to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/toast') %>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

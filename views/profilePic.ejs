@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Update Photo' }) %>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)] min-h-screen">
+  <%- include('partials/navbar') %>
+
+  <div class="max-w-md mx-auto px-5 py-10">
+    <a href="/profile" class="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition inline-flex items-center gap-1 mb-6">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+      Back to profile
+    </a>
+
+    <div class="auth-card p-8">
+      <h3 class="text-xl font-bold mb-1 text-center">Update your photo</h3>
+      <p class="text-sm text-[var(--text-muted)] text-center mb-6">JPG or PNG, square images look best</p>
+
+      <form autocomplete="off" action="/upload" enctype="multipart/form-data" method="post" class="space-y-4">
+        <div id="previewWrap" class="flex justify-center mb-1" style="display:none;">
+          <img id="preview" class="avatar-img" style="width:96px; height:96px;" alt="Preview">
+        </div>
+
+        <input
+          type="file"
+          name="image"
+          id="fileInput"
+          accept="image/*"
+          required
+          class="w-full text-sm text-[var(--text-muted)] bg-[var(--surface-2)] border border-[var(--border)] rounded-md p-3 file:border-none file:rounded-md file:mr-3 file:py-2 file:px-4 file:font-medium file:cursor-pointer file:bg-[var(--accent)] file:text-white cursor-pointer"
+        />
+
+        <button type="submit" class="btn-primary">
+          <span class="btn-label">Upload Photo</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <%- include('partials/toast') %>
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const previewWrap = document.getElementById('previewWrap');
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      preview.src = URL.createObjectURL(file);
+      previewWrap.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
