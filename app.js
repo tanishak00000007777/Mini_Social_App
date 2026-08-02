@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const upload = require('./config/multerconfig');
 
 const app = express();
-const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.set('view engine', 'ejs');
 app.use(express.json());
