@@ -1,4 +1,4 @@
-/* ===== Loop — design tokens ===== */
+/* ===== Etch — design tokens ===== */
 :root {
   --bg: #0a0a0f;
   --surface: #14141b;
@@ -31,11 +31,11 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(circle at 12% -5%, rgba(139, 92, 246, 0.28), transparent 42%),
-    radial-gradient(circle at 88% 12%, rgba(99, 102, 241, 0.24), transparent 45%),
-    radial-gradient(circle at 25% 65%, rgba(168, 85, 247, 0.14), transparent 50%),
-    radial-gradient(circle at 90% 85%, rgba(124, 58, 237, 0.16), transparent 45%),
-    linear-gradient(180deg, #0a0a12 0%, #0a0a0f 100%);
+    radial-gradient(circle at 12% -5%, rgba(139, 92, 246, 0.16), transparent 40%),
+    radial-gradient(circle at 88% 12%, rgba(99, 102, 241, 0.13), transparent 42%),
+    radial-gradient(circle at 25% 70%, rgba(168, 85, 247, 0.07), transparent 48%),
+    radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.08), transparent 42%),
+    linear-gradient(180deg, #08080d 0%, #0a0a0f 100%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   position: relative;
@@ -47,8 +47,8 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: conic-gradient(from 180deg at 50% 0%, transparent 0deg, rgba(168, 85, 247, 0.06) 90deg, transparent 180deg, rgba(99, 102, 241, 0.06) 270deg, transparent 360deg);
-  animation: aurora-drift 22s linear infinite;
+  background: conic-gradient(from 180deg at 50% 0%, transparent 0deg, rgba(168, 85, 247, 0.04) 90deg, transparent 180deg, rgba(99, 102, 241, 0.04) 270deg, transparent 360deg);
+  animation: aurora-drift 26s linear infinite;
   pointer-events: none;
 }
 @keyframes aurora-drift {
@@ -92,9 +92,9 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 40;
-  backdrop-filter: blur(14px);
-  background: rgba(10, 10, 15, 0.72);
-  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  backdrop-filter: blur(16px);
+  background: rgba(8, 8, 12, 0.86);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.14);
 }
 .navbar-inner {
   max-width: 760px;
@@ -325,14 +325,14 @@ body::before {
 /* ===== Landing page ===== */
 .hero-glow {
   position: absolute;
-  inset: -40px -40px auto -40px;
-  height: 520px;
+  inset: 0 -40px auto -40px;
+  height: 460px;
   pointer-events: none;
   background:
-    radial-gradient(650px circle at 22% 15%, rgba(139, 92, 246, 0.30), transparent 62%),
-    radial-gradient(550px circle at 82% 35%, rgba(99, 102, 241, 0.26), transparent 62%),
-    radial-gradient(400px circle at 50% 90%, rgba(168, 85, 247, 0.14), transparent 65%);
-  filter: blur(4px);
+    radial-gradient(600px circle at 22% 10%, rgba(139, 92, 246, 0.18), transparent 60%),
+    radial-gradient(500px circle at 82% 25%, rgba(99, 102, 241, 0.15), transparent 60%),
+    radial-gradient(380px circle at 50% 85%, rgba(168, 85, 247, 0.08), transparent 65%);
+  filter: blur(6px);
 }
 .pill {
   display: inline-flex;
@@ -378,6 +378,80 @@ body::before {
 .avatar-add:hover { transform: scale(1.08); }
 
 .char-counter { font-size: 12px; color: var(--text-faint); }
+
+/* ===== Streak stats ===== */
+.stat-card {
+  background: linear-gradient(180deg, var(--surface), #131319);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
+  text-align: center;
+}
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ===== Calendar heatmap ===== */
+.heatmap-grid {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+}
+.heat-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 9px;
+  min-height: 9px;
+  border-radius: 3px;
+  background: rgba(139, 92, 246, 0.35);
+}
+span.heat-cell:not(.active) {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+}
+.heat-cell.active {
+  background: linear-gradient(135deg, var(--accent), var(--violet));
+}
+
+/* ===== Filter tabs ===== */
+.filter-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+}
+.filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.filter-tab:hover { color: var(--text); }
+.filter-tab.active {
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: white;
+}
 
 
 .google-btn{

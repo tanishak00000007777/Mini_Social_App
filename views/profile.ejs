@@ -9,7 +9,7 @@
   <div class="max-w-2xl mx-auto px-5 py-8">
 
     <!-- Profile header -->
-    <div class="flex items-start gap-4 mb-8">
+    <div class="flex items-start gap-4 mb-6">
       <div class="avatar-wrap">
         <img class="avatar-img" src="<%= user.profilepic %>" alt="<%= user.name %>'s profile picture">
         <a href="/profile/upload" class="avatar-add" title="Change photo">+</a>
@@ -22,13 +22,48 @@
       </div>
     </div>
 
+    <!-- Streak stats -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+      <div class="stat-card">
+        <div class="stat-value">🔥 <%= streaks.currentStreak %></div>
+        <div class="stat-label">Day streak</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><%= streaks.longestStreak %></div>
+        <div class="stat-label">Longest streak</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><%= streaks.totalDaysWritten %></div>
+        <div class="stat-label">Days written</div>
+      </div>
+    </div>
+
+    <!-- Calendar heatmap -->
+    <div class="card p-4 mb-10">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-xs font-semibold text-[var(--text-faint)] uppercase tracking-wide">Last 12 weeks</h3>
+        <div class="flex items-center gap-1.5 text-[11px] text-[var(--text-faint)]">
+          <span>Less</span>
+          <span class="heat-cell" style="opacity:.25"></span>
+          <span class="heat-cell" style="opacity:.55"></span>
+          <span class="heat-cell" style="opacity:1"></span>
+          <span>More</span>
+        </div>
+      </div>
+      <div class="heatmap-grid">
+        <% streaks.heatmap.forEach(function(day) { %>
+          <span class="heat-cell <%= day.active ? 'active' : '' %>" title="<%= day.date %><%= day.active ? ' — wrote an entry' : '' %>"></span>
+        <% }); %>
+      </div>
+    </div>
+
     <!-- Create post -->
-    <div class="card p-5 mb-10">
+    <div class="card p-5 mb-8">
       <form action="/create" method="post" id="postForm">
         <textarea
           name="content"
           id="postContent"
-          placeholder="What's on your mind?"
+          placeholder="What happened today?"
           required
           maxlength="500"
           class="field h-24 resize-none mb-2"
@@ -36,7 +71,7 @@
         <div class="flex items-center justify-between">
           <span class="char-counter"><span id="charCount">0</span>/500</span>
           <button type="submit" class="px-5 py-2 rounded-md text-sm font-semibold text-white" style="background:linear-gradient(135deg, var(--accent), #7c3aed);">
-            Post
+            Save Entry
           </button>
         </div>
       </form>
@@ -44,27 +79,37 @@
 
     <!-- Posts -->
     <div>
-      <h3 class="text-sm font-semibold text-[var(--text-faint)] uppercase tracking-wide mb-4">Your Posts</h3>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-semibold text-[var(--text-faint)] uppercase tracking-wide">Your Entries</h3>
+        <div class="filter-tabs" id="filterTabs">
+          <button type="button" class="filter-tab active" data-filter="all">All</button>
+          <button type="button" class="filter-tab" data-filter="favorites">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Favorites
+          </button>
+        </div>
+      </div>
 
       <% if (!user.posts || user.posts.length === 0) { %>
         <div class="empty-state">
           <div class="text-3xl mb-3">📝</div>
-          <p class="font-medium text-[var(--text)] mb-1">No posts yet</p>
-          <p class="text-sm">Share your first thought above — it'll show up here.</p>
+          <p class="font-medium text-[var(--text)] mb-1">No entries yet</p>
+          <p class="text-sm">Write about your day above — it'll show up here.</p>
         </div>
       <% } else { %>
-        <div class="space-y-4">
-          <% user.posts.slice().reverse().forEach(function(post) { %>
-            <div class="post-card">
+        <div class="space-y-4" id="postsList">
+          <% user.posts.forEach(function(post) { %>
+            <% const isFav = post.likes.indexOf(user._id) !== -1; %>
+            <div class="post-card" data-favorite="<%= isFav %>">
               <div class="flex items-center justify-between mb-2">
                 <h4 class="text-[var(--accent)] font-semibold text-sm"><%= user.username %></h4>
-                <span class="text-xs text-[var(--text-faint)]"><%= timeAgo(post.date) %></span>
+                <span class="text-xs text-[var(--text-faint)]"><%= timeAgo(post.createdAt) %></span>
               </div>
               <p class="text-[15px] text-[var(--text)] leading-relaxed whitespace-pre-wrap"><%= post.content %></p>
               <div class="flex items-center gap-5 mt-3">
-                <a href="/like/<%= post._id %>" class="like-link <%= post.likes.indexOf(user._id) !== -1 ? 'liked' : '' %>">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="<%= post.likes.indexOf(user._id) !== -1 ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
-                  <%= post.likes.length %> <%= post.likes.indexOf(user._id) !== -1 ? "Liked" : "Like" %>
+                <a href="/like/<%= post._id %>" class="like-link <%= isFav ? 'liked' : '' %>">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="<%= isFav ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+                  <%= isFav ? "Favorited" : "Favorite" %>
                 </a>
                 <a href="/edit/<%= post._id %>" class="edit-link">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
@@ -73,6 +118,11 @@
               </div>
             </div>
           <% }); %>
+        </div>
+        <div class="empty-state" id="noFavorites" style="display:none;">
+          <div class="text-3xl mb-3">⭐</div>
+          <p class="font-medium text-[var(--text)] mb-1">No favorites yet</p>
+          <p class="text-sm">Mark an entry as a favorite to revisit it here later.</p>
         </div>
       <% } %>
     </div>
@@ -86,6 +136,29 @@
     const charCount = document.getElementById('charCount');
     contentBox.addEventListener('input', () => {
       charCount.textContent = contentBox.value.length;
+    });
+
+    const tabs = document.querySelectorAll('.filter-tab');
+    const postCards = document.querySelectorAll('#postsList .post-card');
+    const noFavorites = document.getElementById('noFavorites');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+
+        let visibleCount = 0;
+        postCards.forEach(card => {
+          const show = filter === 'all' || card.dataset.favorite === 'true';
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        if (noFavorites) {
+          noFavorites.style.display = (filter === 'favorites' && visibleCount === 0) ? 'block' : 'none';
+        }
+      });
     });
   </script>
 </body>
