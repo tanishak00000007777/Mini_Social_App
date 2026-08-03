@@ -16,49 +16,38 @@ Loop allows users to securely register, log in, create and edit posts, upload pr
 
 ## 🏠 Landing Page
 
-> *(Add Screenshot Here)*
-
-![Landing Page](screenshots/home.png)
+![Landing Page](public/images/uploads/home.png)
 
 ---
 
 ## 🔐 Login Page
 
-> *(Add Screenshot Here)*
 
-![Login](screenshots/login.png)
+![Login](public/images/uploads/login.png)
 
 ---
 
 ## 📝 Register Page
 
-> *(Add Screenshot Here)*
 
-![Register](screenshots/register.png)
+
+![Register](public/images/uploads/signin.png)
 
 ---
 
 ## 👤 User Dashboard
 
-> *(Add Screenshot Here)*
 
-![Dashboard](screenshots/dashboard.png)
-
----
-
-## 📷 Profile Picture Upload
-
-> *(Add Screenshot Here)*
-
-![Profile Upload](screenshots/profile-upload.png)
+![Dashboard](public/images/uploads/user.png)
 
 ---
+
 
 ## 📝 Create & Manage Posts
 
 > *(Add Screenshot Here)*
 
-![Posts](screenshots/posts.png)
+![Posts](public/images/uploads/post.png)
 
 ---
 
