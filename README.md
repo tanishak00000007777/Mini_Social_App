@@ -1,89 +1,259 @@
-# Etch
+# ETCH
 
-A daily journal app built with Node.js, Express, and MongoDB. Write an entry, build a streak, favorite the ones that matter — entries can be edited, but never deleted, so the record stays honest. Auth supports both email/password and Google OAuth, with profile photos hosted on Cloudinary.
+A modern social media web application built with **Node.js, Express.js, MongoDB Atlas, JWT Authentication, Google OAuth 2.0, Cloudinary, and Render**.
 
-## Features
+Loop allows users to securely register, log in, create and edit posts, upload profile pictures, and authenticate using Google. The application follows the MVC architecture and is deployed on Render for public access.
 
-- Email/password authentication (JWT stored in an httpOnly cookie) and Google OAuth via Passport
-- Password hashing with bcrypt
-- Write and edit entries — deletion is intentionally not supported
-- Favorite entries to revisit them later, with a dedicated Favorites filter
-- Writing streaks: current streak, longest streak, and a 12-week activity heatmap
-- Profile photo upload, stored on Cloudinary (old photo is cleaned up on replace)
-- Toast notifications for all auth and entry actions — no raw error pages, no full-page reloads on login/register
-- Server-rendered EJS views with a shared design system (Tailwind CDN + custom CSS)
+---
 
-## Tech Stack
+# 🚀 Live Demo
 
-- **Backend:** Node.js, Express 5, MongoDB, Mongoose
-- **Auth:** JWT + httpOnly cookies, Passport (Google OAuth 2.0)
-- **Views:** EJS, Tailwind CSS (CDN), vanilla JS
-- **Media storage:** Cloudinary (via Multer)
+🔗 https://mini-social-app-n1tc.onrender.com
 
-## Project Structure
+---
+
+# 📸 Project Screenshots
+
+## 🏠 Landing Page
+
+> *(Add Screenshot Here)*
+
+![Landing Page](screenshots/home.png)
+
+---
+
+## 🔐 Login Page
+
+> *(Add Screenshot Here)*
+
+![Login](screenshots/login.png)
+
+---
+
+## 📝 Register Page
+
+> *(Add Screenshot Here)*
+
+![Register](screenshots/register.png)
+
+---
+
+## 👤 User Dashboard
+
+> *(Add Screenshot Here)*
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+## 📷 Profile Picture Upload
+
+> *(Add Screenshot Here)*
+
+![Profile Upload](screenshots/profile-upload.png)
+
+---
+
+## 📝 Create & Manage Posts
+
+> *(Add Screenshot Here)*
+
+![Posts](screenshots/posts.png)
+
+---
+
+# ✨ Features
+
+### Authentication
+
+- Secure User Registration
+- Secure Login
+- JWT Authentication
+- Google OAuth 2.0 Login
+- Protected Routes
+- Secure Logout
+
+### User Profile
+
+- Personalized Dashboard
+- Update Profile Picture
+- Cloudinary Image Storage
+- Automatic Replacement of Previous Profile Picture
+
+### Posts
+
+- Create Posts
+- Edit Existing Posts
+- Like / Unlike Posts
+- View Personal Feed
+
+### Backend
+
+- MVC Architecture
+- RESTful Routing
+- MongoDB Atlas Database
+- Cloudinary Integration
+- Passport Google OAuth
+- Environment Variable Configuration
+
+### Deployment
+
+- Render Hosting
+- MongoDB Atlas
+- Cloudinary CDN
+- Production Environment Variables
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- HTML5
+- CSS3
+- Tailwind CSS
+- EJS
+- JavaScript
+
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- MongoDB Atlas
+- Mongoose
+
+## Authentication
+
+- JWT
+- Passport.js
+- Google OAuth 2.0
+- bcrypt
+
+## Cloud
+
+- Cloudinary
+- Render
+
+---
+
+# 📂 Folder Structure
 
 ```
-├── app.js                  # App entry point — middleware, route mounting, server start
+mini_backend/
+│
 ├── config/
-│   ├── database.js         # MongoDB connection
-│   ├── cloudinary.js       # Cloudinary config
-│   ├── multerconfig.js     # Multer + Cloudinary storage
-│   └── passport.js         # Google OAuth strategy
-├── middleware/
-│   └── auth.js             # JWT auth guard (isLoggedIn)
-├── modules/
-│   ├── user.js              # User schema
-│   └── post.js              # Entry (post) schema
+│   ├── cloudinary.js
+│   ├── database.js
+│   ├── multerconfig.js
+│   └── passport.js
+│
 ├── controllers/
-│   ├── authController.js   # Register / login / logout / Google OAuth
-│   ├── userController.js   # Profile, streaks, photo upload
-│   └── postController.js   # Create / favorite / edit entries
+│   ├── authController.js
+│   ├── postController.js
+│   └── userController.js
+│
+├── middleware/
+│   └── auth.js
+│
+├── modules/
+│   ├── post.js
+│   └── user.js
+│
+├── public/
+│
 ├── routes/
 │   ├── authRoutes.js
-│   ├── userRoutes.js
-│   └── postRoutes.js
-├── views/                   # EJS templates + shared partials (head, navbar, toast)
-└── public/                  # Stylesheets, client-side JS, static assets
+│   ├── postRoutes.js
+│   └── userRoutes.js
+│
+├── views/
+│
+├── app.js
+└── package.json
 ```
 
-## Setup
+---
 
-1. Clone the repo and install dependencies
+# 🔒 Environment Variables
 
-   ```bash
-   git clone https://github.com/tanishak00000007777/Mini_Social_App.git
-   cd Mini_Social_App
-   npm install
-   ```
+Create a `.env` file.
 
-2. Create a `.env` file in the project root (see `.env.example`):
+```env
+MONGO_URI=
 
-   ```env
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   ```
+JWT_SECRET=
 
-   Google OAuth is optional — the app works with email/password alone if you skip those two vars, though `config/passport.js` still expects them to be defined (leave them blank rather than omitting them).
+GOOGLE_CLIENT_ID=
 
-3. Start the server
+GOOGLE_CLIENT_SECRET=
 
-   ```bash
-   npm start        # node app.js
-   npm run dev       # nodemon app.js, for local development
-   ```
+GOOGLE_CALLBACK_URL=
 
-4. Visit `http://localhost:3000`
+CLOUDINARY_CLOUD_NAME=
 
-## License
+CLOUDINARY_API_KEY=
 
-Open-source and free to use — feel free to modify and build on it.
+CLOUDINARY_API_SECRET=
+```
 
-## Author
+---
 
-Tanishak Bansal
-GitHub: [@tanishak00000007777](https://github.com/tanishak00000007777)
+# ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the project
+
+```bash
+npm start
+```
+
+---
+
+# 🌍 Deployment
+
+The application is deployed using **Render**.
+
+Deployment includes:
+
+- MongoDB Atlas
+- Cloudinary
+- Google OAuth Production Configuration
+- Environment Variables
+- Secure JWT Authentication
+
+---
+
+# 📈 Future Improvements
+
+- Image Posts
+- Comments
+- Notifications
+- Follow / Unfollow System
+- Dark Mode
+- Infinite Scrolling
+
+---
+
+# 👨‍💻 Author
+
+**Tanishak Bansal**
+
+Computer Engineering Undergraduate
+
+Thapar Institute of Engineering & Technology
+
+---
