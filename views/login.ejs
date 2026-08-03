@@ -14,11 +14,26 @@
 
     <div class="auth-card p-8">
       <h3 class="text-2xl font-bold mb-1 text-center">Welcome back</h3>
-      <p class="text-sm text-[var(--text-muted)] text-center mb-6">Log in to keep the conversation going</p>
+      <p class="text-sm text-[var(--text-muted)] text-center mb-6">
+        Log in to keep the conversation going
+      </p>
 
       <form id="loginForm" class="space-y-3.5" autocomplete="off">
-        <input type="email" name="email" placeholder="Email" required class="field" />
-        <input type="password" name="password" placeholder="Password" required class="field" />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          class="field"
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          class="field"
+        />
 
         <button type="submit" class="btn-primary mt-1">
           <span class="btn-label">Login</span>
@@ -26,14 +41,37 @@
         </button>
       </form>
 
-      <div class="mt-6 text-center">
-        <p class="text-sm text-[var(--text-muted)] mb-2">Don't have an account?</p>
-        <a href="/register" class="btn-ghost">Create Account</a>
+      <!-- Divider -->
+      <div class="flex items-center gap-3 my-6">
+        <div class="flex-1 h-px bg-gray-300"></div>
+        <span class="text-sm text-[var(--text-muted)]">OR</span>
+        <div class="flex-1 h-px bg-gray-300"></div>
       </div>
+
+      <!-- Google Login -->
+      <a href="/auth/google" class="google-btn">
+      <img
+          src="https://developers.google.com/identity/images/g-logo.png"
+          alt="Google"
+      />
+      <span>Continue with Google</span>
+      </a>
+
+      <div class="mt-6 text-center">
+        <p class="text-sm text-[var(--text-muted)] mb-2">
+          Don't have an account?
+        </p>
+
+        <a href="/register" class="btn-ghost">
+          Create Account
+        </a>
+      </div>
+
     </div>
   </div>
 
   <%- include('partials/toast') %>
+
   <script src="/js/auth.js"></script>
 </body>
 </html>

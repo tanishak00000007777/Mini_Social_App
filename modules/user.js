@@ -1,25 +1,64 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch(err => console.log("❌ MongoDB Connection Error:", err));
+const userSchema = new mongoose.Schema(
+{
+    username:{
+        type:String,
+        required:true,
+        trim:true
+    },
 
-const userSchema = mongoose.Schema({
-    username: String,
-    name: String,
-    email: String,
-    age: Number,
-    password: String,
+    name:{
+        type:String,
+        required:true,
+        trim:true
+    },
+
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        lowercase:true,
+        trim:true
+    },
+
+    age:{
+        type:Number,
+        default:0
+    },
+
+    password:{
+        type:String,
+        default:null
+    },
+
+    provider:{
+        type:String,
+        enum:["local","google"],
+        default:"local"
+    },
+
+    googleId:{
+        type:String,
+        unique:true,
+        sparse:true
+    },
+
     profilepic:{
         type:String,
-        default:"boy.png"
+        default:"https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
     },
-    posts: [
+
+    posts:[
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "post"
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"post"
         }
     ]
-});
+},
+{
+    timestamps:true
+}
+);
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user",userSchema);
