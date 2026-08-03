@@ -38,7 +38,7 @@ Loop allows users to securely register, log in, create and edit posts, upload pr
 ## 👤 User Dashboard
 
 
-![Dashboard](public/images/uploads/user.png)
+![Dashboard](public/images/uploads/profile.png)
 
 ---
 
